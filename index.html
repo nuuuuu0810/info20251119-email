@@ -1,0 +1,860 @@
+
+Open Editor
+Agent Manager
+Preview
+1
+Workspaces
+Playground
+
+Playground
+/
+Phishing Awareness Web App
+Review Changes
+I've updated the plan to use Vanilla HTML/CSS/JS. I'll start by creating the core files (index.html, style.css, script.js) and building the Gmail-like interface.
+
+Implementation Plan
+Open
+Updated Implementation Plan for Vanilla JS.
+Proceeded with
+Auto-proceeded by the agent under your review policy.
+
+Always Proceed
+Core Implementation
+Plan approved. Starting core implementation of the Vanilla JS app.
+
+Files Edited
+Progress Updates
+1
+Creating core files (index.html, style.css, script.js)
+
+I've built the application with index.html, style.css, and script.js.
+
+You can now open index.html in your browser to test it.
+
+Try clicking the "Amaz0n" email and then the link to see the "Scary" screen.
+Try clicking the "School" email to see the "Safe" message.
+I'll create a walkthrough artifact to document this.
+
+１コードにできる？
+Single File Conversion
+User requested to merge everything into a single file. Combining index.html, style.css, and script.js.
+
+Files Edited
+Progress Updates
+1
+Merging HTML, CSS, and JS into a single index.html file
+
+I've combined everything into a single index.html file. You can now run the app just by opening this one file.
+
+I also removed the separate style.css and script.js files to keep things clean.
+
+Good
+Bad
+
+Add context
+Images
+Mentions
+
+Conversation mode
+Planning
+Agent can plan before executing tasks. Use for deep research, complex tasks, or collaborative work
+Fast
+Agent will execute tasks directly. Use for simple tasks that can be completed faster
+Model
+Gemini 3 Pro (High)
+Gemini 3 Pro (Low)
+Claude Sonnet 4.5
+Claude Sonnet 4.5 (Thinking)
+GPT-OSS 120B (Medium)
+
+
+
+
+index.html
+
+
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeMail - Phishing Awareness</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f6f8fc;
+            --sidebar-bg: #f6f8fc;
+            --main-bg: #ffffff;
+            --text-primary: #1f1f1f;
+            --text-secondary: #444746;
+            --accent-blue: #c2e7ff;
+            --accent-blue-dark: #001d35;
+            --hover-bg: #eaebef;
+            --border-color: #e7e7e7;
+            --danger-red: #ff0000;
+            --safe-green: #4caf50;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Roboto', 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            height: 100vh;
+            overflow: hidden;
+        }
+        #app {
+            display: flex;
+            height: 100vh;
+        }
+        /* Sidebar */
+        .sidebar {
+            width: 256px;
+            background-color: var(--sidebar-bg);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 12px;
+            color: #444;
+            font-size: 22px;
+            font-weight: 500;
+        }
+        .logo-icon {
+            color: #ea4335;
+            /* Google-ish red */
+        }
+        .compose-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background-color: #c2e7ff;
+            color: #001d35;
+            border: none;
+            border-radius: 16px;
+            padding: 16px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            width: fit-content;
+            transition: box-shadow 0.2s;
+        }
+        .compose-btn:hover {
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 4px 8px 3px rgba(0, 0, 0, 0.15);
+        }
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 0 12px 0 26px;
+            height: 32px;
+            border-radius: 16px;
+            /* Pill shape */
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .nav-item.active {
+            background-color: #d3e3fd;
+            color: #001d35;
+            font-weight: 700;
+        }
+        .nav-item:hover:not(.active) {
+            background-color: var(--hover-bg);
+        }
+        .badge {
+            margin-left: auto;
+            font-size: 12px;
+        }
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--main-bg);
+            border-radius: 16px;
+            margin: 8px 8px 8px 0;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+        /* Header */
+        .top-bar {
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 16px;
+        }
+        .search-bar {
+            background-color: #eaf1fb;
+            border-radius: 24px;
+            padding: 0 16px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 0 1 720px;
+            color: #444746;
+        }
+        .search-bar input {
+            border: none;
+            background: transparent;
+            flex: 1;
+            font-size: 16px;
+            outline: none;
+        }
+        .user-profile .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #0b57d0;
+            /* Google Blue */
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        /* View Container */
+        .view-container {
+            flex: 1;
+            overflow-y: auto;
+        }
+        /* Email List */
+        .email-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+        .email-item:hover {
+            background-color: var(--hover-bg);
+            box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15);
+            z-index: 1;
+        }
+        .email-item.unread {
+            background-color: #f2f6fc;
+            font-weight: 700;
+        }
+        .email-item.unread .sender,
+        .email-item.unread .subject {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+        .sender {
+            width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+        .content-preview {
+            flex: 1;
+            display: flex;
+            gap: 8px;
+            overflow: hidden;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        .subject {
+            color: var(--text-primary);
+        }
+        .snippet {
+            color: #5e5e5e;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .date {
+            width: 100px;
+            text-align: right;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        /* Email Detail */
+        .hidden {
+            display: none !important;
+        }
+        .detail-toolbar {
+            padding: 8px 16px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .icon-btn {
+            background: none;
+            border: none;
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+        .icon-btn:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        .detail-content {
+            padding: 24px 32px;
+        }
+        .detail-meta {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        .sender-info {
+            display: flex;
+            gap: 12px;
+        }
+        .sender-info .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #a142f4;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        .sender-name {
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .sender-email {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        .email-body {
+            margin-top: 32px;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+        .email-link {
+            color: #1a73e8;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        /* Scary Overlay */
+        .scary-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000;
+            color: #ff0000;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .glitch-container {
+            text-align: center;
+            animation: shake 0.5s infinite;
+        }
+        .glitch {
+            font-size: 80px;
+            font-weight: bold;
+            text-shadow: 2px 2px #00ff00, -2px -2px #0000ff;
+            animation: glitch 1s infinite;
+        }
+        .glitch-sub {
+            font-size: 32px;
+            margin-bottom: 40px;
+        }
+        .scary-message p {
+            font-size: 20px;
+            margin: 10px 0;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+        .scary-message p:nth-child(1) {
+            animation-delay: 1s;
+        }
+        .scary-message p:nth-child(2) {
+            animation-delay: 2s;
+        }
+        .scary-message p:nth-child(3) {
+            animation-delay: 3s;
+        }
+        .scary-message p:nth-child(4) {
+            animation-delay: 4s;
+        }
+        .explain-btn {
+            margin-top: 40px;
+            padding: 16px 32px;
+            background-color: #ff0000;
+            color: white;
+            border: 2px solid white;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            animation: pulse 2s infinite;
+        }
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 32px;
+            border-radius: 16px;
+            max-width: 600px;
+            text-align: center;
+        }
+        .lesson-box {
+            background-color: #fce8e6;
+            border: 1px solid #fad2cf;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 24px 0;
+            text-align: left;
+        }
+        .lesson-box h3 {
+            color: #c5221f;
+            margin-bottom: 8px;
+        }
+        .primary-btn {
+            background-color: #0b57d0;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 24px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #323232;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            z-index: 2000;
+            animation: slideUp 0.3s ease-out;
+        }
+        .toast-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        /* Animations */
+        @keyframes glitch {
+            0% {
+                transform: translate(0)
+            }
+            20% {
+                transform: translate(-2px, 2px)
+            }
+            40% {
+                transform: translate(-2px, -2px)
+            }
+            60% {
+                transform: translate(2px, 2px)
+            }
+            80% {
+                transform: translate(2px, -2px)
+            }
+            100% {
+                transform: translate(0)
+            }
+        }
+        @keyframes shake {
+            0% {
+                transform: translate(1px, 1px) rotate(0deg);
+            }
+            10% {
+                transform: translate(-1px, -2px) rotate(-1deg);
+            }
+            20% {
+                transform: translate(-3px, 0px) rotate(1deg);
+            }
+            30% {
+                transform: translate(3px, 2px) rotate(0deg);
+            }
+            40% {
+                transform: translate(1px, -1px) rotate(1deg);
+            }
+            50% {
+                transform: translate(-1px, 2px) rotate(-1deg);
+            }
+            60% {
+                transform: translate(-3px, 1px) rotate(0deg);
+            }
+            70% {
+                transform: translate(3px, 1px) rotate(-1deg);
+            }
+            80% {
+                transform: translate(-1px, -1px) rotate(1deg);
+            }
+            90% {
+                transform: translate(1px, 2px) rotate(0deg);
+            }
+            100% {
+                transform: translate(1px, -2px) rotate(-1deg);
+            }
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes slideUp {
+            from {
+                transform: translate(-50%, 100%);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="logo-icon">
+                    <rect width="20" height="16" x="2" y="4" rx="2" />
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                </svg>
+                <span class="logo-text">SafeMail</span>
+            </div>
+            <button class="compose-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 5v14M5 12h14" />
+                </svg>
+                作成
+            </button>
+            <nav class="nav-links">
+                <a href="#" class="nav-item active" data-folder="inbox">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="20" height="16" x="2" y="4" rx="2" />
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                    </svg>
+                    <span>受信トレイ</span>
+                    <span class="badge">2</span>
+                </a>
+                <a href="#" class="nav-item" data-folder="starred">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon
+                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg>
+                    <span>スター付き</span>
+                </a>
+                <a href="#" class="nav-item" data-folder="sent">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" x2="11" y1="2" y2="13" />
+                        <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                    </svg>
+                    <span>送信済み</span>
+                </a>
+            </nav>
+        </aside>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-bar">
+                <div class="search-bar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.3-4.3" />
+                    </svg>
+                    <input type="text" placeholder="メールを検索">
+                </div>
+                <div class="user-profile">
+                    <div class="avatar">K</div>
+                </div>
+            </header>
+            <!-- View Container -->
+            <div id="view-container" class="view-container">
+                <!-- Email List (Default) -->
+                <div id="email-list" class="email-list">
+                    <!-- Emails will be injected here -->
+                </div>
+                <!-- Email Detail (Hidden) -->
+                <div id="email-detail" class="email-detail hidden">
+                    <div class="detail-toolbar">
+                        <button id="back-btn" class="icon-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="m15 18-6-6 6-6" />
+                            </svg>
+                        </button>
+                        <div class="toolbar-actions">
+                            <button class="icon-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="3 6 5 6 21 6" />
+                                    <path
+                                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                                </svg></button>
+                            <button class="icon-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                    <polyline points="22,6 12,13 2,6" />
+                                </svg></button>
+                        </div>
+                    </div>
+                    <div class="detail-content">
+                        <h2 id="detail-subject">Subject</h2>
+                        <div class="detail-meta">
+                            <div class="sender-info">
+                                <div class="avatar" id="detail-avatar">A</div>
+                                <div>
+                                    <div class="sender-name" id="detail-sender">Sender Name</div>
+                                    <div class="sender-email" id="detail-email">sender@example.com</div>
+                                </div>
+                            </div>
+                            <div class="email-date" id="detail-date">Today</div>
+                        </div>
+                        <div class="email-body" id="detail-body">
+                            <!-- Body content -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <!-- Scary Overlay -->
+    <div id="scary-overlay" class="scary-overlay hidden">
+        <div class="glitch-container">
+            <h1 class="glitch" data-text="WARNING">WARNING</h1>
+            <h2 class="glitch-sub" data-text="YOUR DEVICE IS COMPROMISED">YOUR DEVICE IS COMPROMISED</h2>
+            <div class="scary-message">
+                <p>あなたの個人情報が盗まれました...</p>
+                <p>クレジットカード番号...</p>
+                <p>住所...</p>
+                <p>パスワード...</p>
+            </div>
+            <button id="explain-btn" class="explain-btn">どうしてこうなったの？</button>
+        </div>
+    </div>
+    <!-- Explanation Modal -->
+    <div id="explanation-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>今の画面は「フィッシング詐欺」のシミュレーションです</h2>
+            <p>本物のウイルスではありませんが、怪しいリンクをクリックすると、本当にこのような危険な目に遭うことがあります。</p>
+            <div class="lesson-box">
+                <h3>🔍 チェックポイント</h3>
+                <p>さっきのメール、ここが怪しかったよ！</p>
+                <ul id="lesson-points">
+                    <!-- Dynamic points -->
+                </ul>
+            </div>
+            <button id="close-modal-btn" class="primary-btn">わかった！</button>
+        </div>
+    </div>
+    <!-- Safe Toast -->
+    <div id="safe-toast" class="toast hidden">
+        <div class="toast-content">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+            <span>安全なサイトです！よく確認しましたね👍</span>
+        </div>
+    </div>
+    <script>
+        // Mock Data
+        const emails = [
+            {
+                id: 1,
+                sender: "先生 (学校)",
+                email: "teacher@school.edu",
+                subject: "明日の宿題について",
+                snippet: "明日の数学の宿題ですが、教科書のP.32〜34をやってきてください...",
+                body: "生徒の皆さん\n\n明日の数学の宿題ですが、教科書のP.32〜34をやってきてください。\nわからないところがあれば、以下のリンクから解説動画が見られます。\n\n<a href='#' class='email-link' data-url='https://school.edu/homework' data-safe='true'>解説動画を見る</a>\n\nよろしくお願いします。\n田中先生",
+                date: "10:30",
+                avatarColor: "#4caf50",
+                isUnread: true
+            },
+            {
+                id: 2,
+                sender: "Amaz0n セキュリティ",
+                email: "support@amaz0n-security.com",
+                subject: "【重要】アカウントが停止されました",
+                snippet: "あなたのアカウントで不正なログインが検出されました。直ちに確認して...",
+                body: "お客様へ\n\nあなたのアカウントで不正なログインが検出されました。\nセキュリティ保護のため、アカウントを一時的に停止しています。\n\n以下のリンクからログインして、本人確認を行ってください。\n24時間以内に対応しない場合、アカウントは永久に削除されます。\n\n<a href='#' class='email-link' data-url='http://amaz0n-security.com/login' data-safe='false'>アカウントを確認する</a>\n\nAmaz0n セキュリティチーム",
+                date: "09:15",
+                avatarColor: "#ea4335",
+                isUnread: true
+            },
+            {
+                id: 3,
+                sender: "おばあちゃん",
+                email: "grandma@example.com",
+                subject: "元気にしてる？",
+                snippet: "久しぶり！最近どう？今度の日曜日、遊びにおいでよ。美味しい...",
+                body: "久しぶり！最近どう？\n\n今度の日曜日、遊びにおいでよ。\n美味しいケーキ焼いて待ってるからね。\n\nお返事待ってます。\n\nおばあちゃんより",
+                date: "昨日",
+                avatarColor: "#fbbc04",
+                isUnread: false
+            }
+        ];
+        // State
+        let currentView = 'inbox';
+        // DOM Elements
+        const emailListEl = document.getElementById('email-list');
+        const emailDetailEl = document.getElementById('email-detail');
+        const backBtn = document.getElementById('back-btn');
+        const scaryOverlay = document.getElementById('scary-overlay');
+        const explanationModal = document.getElementById('explanation-modal');
+        const explainBtn = document.getElementById('explain-btn');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const safeToast = document.getElementById('safe-toast');
+        const lessonPoints = document.getElementById('lesson-points');
+        // Initialization
+        function init() {
+            renderEmailList();
+            setupEventListeners();
+        }
+        // Render Email List
+        function renderEmailList() {
+            emailListEl.innerHTML = '';
+            emails.forEach(email => {
+                const el = document.createElement('div');
+                el.className = `email-item ${email.isUnread ? 'unread' : ''}`;
+                el.innerHTML = `
+                    <div class="sender">\${email.sender}</div>
+                    <div class="content-preview">
+                        <span class="subject">\${email.subject}</span>
+                        <span class="snippet">- \${email.snippet}</span>
+                    </div>
+                    <div class="date">\${email.date}</div>
+                `;
+                el.addEventListener('click', () => openEmail(email));
+                emailListEl.appendChild(el);
+            });
+        }
+        // Open Email
+        function openEmail(email) {
+            // Mark as read
+            email.isUnread = false;
+            renderEmailList(); // Re-render to update unread status (in background)
+            // Populate detail view
+            document.getElementById('detail-subject').textContent = email.subject;
+            document.getElementById('detail-sender').textContent = email.sender;
+            document.getElementById('detail-email').textContent = `<\${email.email}>`;
+            document.getElementById('detail-date').textContent = email.date;
+            document.getElementById('detail-body').innerHTML = email.body;
+            const avatar = document.getElementById('detail-avatar');
+            avatar.textContent = email.sender[0];
+            avatar.style.backgroundColor = email.avatarColor;
+            // Setup links
+            const links = document.getElementById('detail-body').querySelectorAll('.email-link');
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    handleLinkClick(link.dataset.safe === 'true', link.dataset.url);
+                });
+                // Hover effect to show URL (simulated browser status bar could be added here)
+                link.title = link.dataset.url;
+            });
+            // Switch view
+            emailListEl.classList.add('hidden');
+            emailDetailEl.classList.remove('hidden');
+            currentView = 'detail';
+        }
+        // Handle Link Click
+        function handleLinkClick(isSafe, url) {
+            if (isSafe) {
+                showSafeToast();
+            } else {
+                triggerScaryMode();
+            }
+        }
+        // Show Safe Toast
+        function showSafeToast() {
+            safeToast.classList.remove('hidden');
+            setTimeout(() => {
+                safeToast.classList.add('hidden');
+            }, 3000);
+        }
+        // Trigger Scary Mode
+        function triggerScaryMode() {
+            scaryOverlay.classList.remove('hidden');
+            // Play sound? (Browser policy might block auto-play, skipping for now)
+        }
+        // Show Explanation
+        function showExplanation() {
+            scaryOverlay.classList.add('hidden');
+            explanationModal.classList.remove('hidden');
+            // Populate lesson points based on the phishing email (hardcoded for demo)
+            lessonPoints.innerHTML = `
+                <li>📧 <strong>送信元をチェック:</strong> "amaz0n" の "o" が "0" (ゼロ) になっています！</li>
+                <li>🔗 <strong>URLをチェック:</strong> 本物のAmazonなら "amazon.co.jp" ですが、これは違います。</li>
+                <li>⏰ <strong>急かしてくる:</strong> 「24時間以内」などと焦らせるのは詐欺の典型です。</li>
+            `;
+        }
+        // Close Modal
+        function closeModal() {
+            explanationModal.classList.add('hidden');
+            // Return to inbox
+            emailDetailEl.classList.add('hidden');
+            emailListEl.classList.remove('hidden');
+            currentView = 'inbox';
+        }
+        // Event Listeners
+        function setupEventListeners() {
+            backBtn.addEventListener('click', () => {
+                emailDetailEl.classList.add('hidden');
+                emailListEl.classList.remove('hidden');
+                currentView = 'inbox';
+            });
+            explainBtn.addEventListener('click', showExplanation);
+            closeModalBtn.addEventListener('click', closeModal);
+        }
+        // Run
+        init();
+    </script>
+</body>
+</html>
