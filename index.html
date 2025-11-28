@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,11 +24,13 @@
             --danger-red: #ff0000;
             --safe-green: #4caf50;
         }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
+
         body {
             font-family: 'Roboto', 'Inter', sans-serif;
             background-color: var(--bg-color);
@@ -35,10 +38,12 @@
             height: 100vh;
             overflow: hidden;
         }
+
         #app {
             display: flex;
             height: 100vh;
         }
+
         /* Sidebar */
         .sidebar {
             width: 256px;
@@ -48,6 +53,13 @@
             flex-direction: column;
             gap: 16px;
         }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+        }
+
         .logo-area {
             display: flex;
             align-items: center;
@@ -57,10 +69,11 @@
             font-size: 22px;
             font-weight: 500;
         }
+
         .logo-icon {
             color: #ea4335;
-            /* Google-ish red */
         }
+
         .compose-btn {
             display: flex;
             align-items: center;
@@ -76,14 +89,17 @@
             width: fit-content;
             transition: box-shadow 0.2s;
         }
+
         .compose-btn:hover {
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 4px 8px 3px rgba(0, 0, 0, 0.15);
         }
+
         .nav-links {
             display: flex;
             flex-direction: column;
             gap: 4px;
         }
+
         .nav-item {
             display: flex;
             align-items: center;
@@ -91,24 +107,27 @@
             padding: 0 12px 0 26px;
             height: 32px;
             border-radius: 16px;
-            /* Pill shape */
             text-decoration: none;
             color: var(--text-secondary);
             font-size: 14px;
             font-weight: 500;
         }
+
         .nav-item.active {
             background-color: #d3e3fd;
             color: #001d35;
             font-weight: 700;
         }
+
         .nav-item:hover:not(.active) {
             background-color: var(--hover-bg);
         }
+
         .badge {
             margin-left: auto;
             font-size: 12px;
         }
+
         /* Main Content */
         .main-content {
             flex: 1;
@@ -120,6 +139,14 @@
             overflow: hidden;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
         }
+
+        @media (max-width: 768px) {
+            .main-content {
+                margin: 0;
+                border-radius: 0;
+            }
+        }
+
         /* Header */
         .top-bar {
             height: 64px;
@@ -128,6 +155,7 @@
             justify-content: space-between;
             padding: 8px 16px;
         }
+
         .search-bar {
             background-color: #eaf1fb;
             border-radius: 24px;
@@ -139,6 +167,7 @@
             flex: 0 1 720px;
             color: #444746;
         }
+
         .search-bar input {
             border: none;
             background: transparent;
@@ -146,23 +175,25 @@
             font-size: 16px;
             outline: none;
         }
+
         .user-profile .avatar {
             width: 32px;
             height: 32px;
             border-radius: 50%;
             background-color: #0b57d0;
-            /* Google Blue */
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 18px;
         }
+
         /* View Container */
         .view-container {
             flex: 1;
             overflow-y: auto;
         }
+
         /* Email List */
         .email-item {
             display: flex;
@@ -172,20 +203,24 @@
             cursor: pointer;
             transition: background 0.1s;
         }
+
         .email-item:hover {
             background-color: var(--hover-bg);
             box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15);
             z-index: 1;
         }
+
         .email-item.unread {
             background-color: #f2f6fc;
             font-weight: 700;
         }
+
         .email-item.unread .sender,
         .email-item.unread .subject {
             color: var(--text-primary);
             font-weight: 700;
         }
+
         .sender {
             width: 200px;
             white-space: nowrap;
@@ -194,6 +229,7 @@
             color: var(--text-primary);
             font-size: 14px;
         }
+
         .content-preview {
             flex: 1;
             display: flex;
@@ -201,32 +237,63 @@
             overflow: hidden;
             font-size: 14px;
             color: var(--text-secondary);
+            padding: 0 16px;
         }
+
         .subject {
             color: var(--text-primary);
         }
+
         .snippet {
             color: #5e5e5e;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
         .date {
             width: 100px;
             text-align: right;
             font-size: 12px;
             color: var(--text-secondary);
+            white-space: nowrap;
         }
+
+        /* Mobile adjustments for list */
+        @media (max-width: 600px) {
+            .email-item {
+                flex-wrap: wrap;
+                padding: 12px 16px;
+                position: relative;
+            }
+            .sender {
+                width: 100%;
+                margin-bottom: 4px;
+                font-size: 16px;
+            }
+            .content-preview {
+                width: 100%;
+                padding: 0;
+            }
+            .date {
+                position: absolute;
+                top: 12px;
+                right: 16px;
+            }
+        }
+
         /* Email Detail */
         .hidden {
             display: none !important;
         }
+
         .detail-toolbar {
             padding: 8px 16px;
             display: flex;
             justify-content: space-between;
             border-bottom: 1px solid var(--border-color);
         }
+
         .icon-btn {
             background: none;
             border: none;
@@ -235,21 +302,26 @@
             cursor: pointer;
             color: var(--text-secondary);
         }
+
         .icon-btn:hover {
             background-color: rgba(0, 0, 0, 0.05);
         }
+
         .detail-content {
             padding: 24px 32px;
         }
+
         .detail-meta {
             display: flex;
             justify-content: space-between;
             margin: 20px 0;
         }
+
         .sender-info {
             display: flex;
             gap: 12px;
         }
+
         .sender-info .avatar {
             width: 40px;
             height: 40px;
@@ -261,25 +333,30 @@
             justify-content: center;
             font-size: 20px;
         }
+
         .sender-name {
             font-weight: 700;
             font-size: 14px;
         }
+
         .sender-email {
             font-size: 12px;
             color: var(--text-secondary);
         }
+
         .email-body {
             margin-top: 32px;
             font-size: 14px;
             line-height: 1.5;
             white-space: pre-wrap;
         }
+
         .email-link {
             color: #1a73e8;
             text-decoration: underline;
             cursor: pointer;
         }
+
         /* Scary Overlay */
         .scary-overlay {
             position: fixed;
@@ -295,38 +372,47 @@
             justify-content: center;
             font-family: 'Courier New', Courier, monospace;
         }
+
         .glitch-container {
             text-align: center;
             animation: shake 0.5s infinite;
         }
+
         .glitch {
             font-size: 80px;
             font-weight: bold;
             text-shadow: 2px 2px #00ff00, -2px -2px #0000ff;
             animation: glitch 1s infinite;
         }
+
         .glitch-sub {
             font-size: 32px;
             margin-bottom: 40px;
         }
+
         .scary-message p {
             font-size: 20px;
             margin: 10px 0;
             opacity: 0;
             animation: fadeIn 0.5s forwards;
         }
+
         .scary-message p:nth-child(1) {
             animation-delay: 1s;
         }
+
         .scary-message p:nth-child(2) {
             animation-delay: 2s;
         }
+
         .scary-message p:nth-child(3) {
             animation-delay: 3s;
         }
+
         .scary-message p:nth-child(4) {
             animation-delay: 4s;
         }
+
         .explain-btn {
             margin-top: 40px;
             padding: 16px 32px;
@@ -338,6 +424,7 @@
             cursor: pointer;
             animation: pulse 2s infinite;
         }
+
         /* Modal */
         .modal {
             position: fixed;
@@ -351,13 +438,16 @@
             align-items: center;
             justify-content: center;
         }
+
         .modal-content {
             background-color: white;
             padding: 32px;
             border-radius: 16px;
             max-width: 600px;
             text-align: center;
+            width: 90%;
         }
+
         .lesson-box {
             background-color: #fce8e6;
             border: 1px solid #fad2cf;
@@ -366,10 +456,12 @@
             margin: 24px 0;
             text-align: left;
         }
+
         .lesson-box h3 {
             color: #c5221f;
             margin-bottom: 8px;
         }
+
         .primary-btn {
             background-color: #0b57d0;
             color: white;
@@ -379,6 +471,7 @@
             font-size: 16px;
             cursor: pointer;
         }
+
         /* Toast */
         .toast {
             position: fixed;
@@ -392,72 +485,41 @@
             z-index: 2000;
             animation: slideUp 0.3s ease-out;
         }
+
         .toast-content {
             display: flex;
             align-items: center;
             gap: 12px;
         }
+
         /* Animations */
         @keyframes glitch {
-            0% {
-                transform: translate(0)
-            }
-            20% {
-                transform: translate(-2px, 2px)
-            }
-            40% {
-                transform: translate(-2px, -2px)
-            }
-            60% {
-                transform: translate(2px, 2px)
-            }
-            80% {
-                transform: translate(2px, -2px)
-            }
-            100% {
-                transform: translate(0)
-            }
+            0% { transform: translate(0) }
+            20% { transform: translate(-2px, 2px) }
+            40% { transform: translate(-2px, -2px) }
+            60% { transform: translate(2px, 2px) }
+            80% { transform: translate(2px, -2px) }
+            100% { transform: translate(0) }
         }
+
         @keyframes shake {
-            0% {
-                transform: translate(1px, 1px) rotate(0deg);
-            }
-            10% {
-                transform: translate(-1px, -2px) rotate(-1deg);
-            }
-            20% {
-                transform: translate(-3px, 0px) rotate(1deg);
-            }
-            30% {
-                transform: translate(3px, 2px) rotate(0deg);
-            }
-            40% {
-                transform: translate(1px, -1px) rotate(1deg);
-            }
-            50% {
-                transform: translate(-1px, 2px) rotate(-1deg);
-            }
-            60% {
-                transform: translate(-3px, 1px) rotate(0deg);
-            }
-            70% {
-                transform: translate(3px, 1px) rotate(-1deg);
-            }
-            80% {
-                transform: translate(-1px, -1px) rotate(1deg);
-            }
-            90% {
-                transform: translate(1px, 2px) rotate(0deg);
-            }
-            100% {
-                transform: translate(1px, -2px) rotate(-1deg);
-            }
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
         }
+
         @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
+            to { opacity: 1; }
         }
+
         @keyframes slideUp {
             from {
                 transform: translate(-50%, 100%);
@@ -470,6 +532,7 @@
         }
     </style>
 </head>
+
 <body>
     <div id="app">
         <!-- Sidebar -->
@@ -518,6 +581,7 @@
                 </a>
             </nav>
         </aside>
+
         <!-- Main Content -->
         <main class="main-content">
             <!-- Header -->
@@ -534,12 +598,14 @@
                     <div class="avatar">K</div>
                 </div>
             </header>
+
             <!-- View Container -->
             <div id="view-container" class="view-container">
                 <!-- Email List (Default) -->
                 <div id="email-list" class="email-list">
                     <!-- Emails will be injected here -->
                 </div>
+
                 <!-- Email Detail (Hidden) -->
                 <div id="email-detail" class="email-detail hidden">
                     <div class="detail-toolbar">
@@ -587,6 +653,7 @@
             </div>
         </main>
     </div>
+
     <!-- Scary Overlay -->
     <div id="scary-overlay" class="scary-overlay hidden">
         <div class="glitch-container">
@@ -601,6 +668,7 @@
             <button id="explain-btn" class="explain-btn">どうしてこうなったの？</button>
         </div>
     </div>
+
     <!-- Explanation Modal -->
     <div id="explanation-modal" class="modal hidden">
         <div class="modal-content">
@@ -616,6 +684,7 @@
             <button id="close-modal-btn" class="primary-btn">わかった！</button>
         </div>
     </div>
+
     <!-- Safe Toast -->
     <div id="safe-toast" class="toast hidden">
         <div class="toast-content">
@@ -627,6 +696,7 @@
             <span>安全なサイトです！よく確認しましたね👍</span>
         </div>
     </div>
+
     <script>
         // Mock Data
         const emails = [
@@ -664,8 +734,10 @@
                 isUnread: false
             }
         ];
+
         // State
         let currentView = 'inbox';
+
         // DOM Elements
         const emailListEl = document.getElementById('email-list');
         const emailDetailEl = document.getElementById('email-detail');
@@ -676,43 +748,50 @@
         const closeModalBtn = document.getElementById('close-modal-btn');
         const safeToast = document.getElementById('safe-toast');
         const lessonPoints = document.getElementById('lesson-points');
+
         // Initialization
         function init() {
             renderEmailList();
             setupEventListeners();
         }
+
         // Render Email List
         function renderEmailList() {
             emailListEl.innerHTML = '';
             emails.forEach(email => {
                 const el = document.createElement('div');
                 el.className = `email-item ${email.isUnread ? 'unread' : ''}`;
+                // Fixed: Removed backslashes to allow correct variable interpolation
                 el.innerHTML = `
-                    <div class="sender">\${email.sender}</div>
+                    <div class="sender">${email.sender}</div>
                     <div class="content-preview">
-                        <span class="subject">\${email.subject}</span>
-                        <span class="snippet">- \${email.snippet}</span>
+                        <span class="subject">${email.subject}</span>
+                        <span class="snippet">- ${email.snippet}</span>
                     </div>
-                    <div class="date">\${email.date}</div>
+                    <div class="date">${email.date}</div>
                 `;
                 el.addEventListener('click', () => openEmail(email));
                 emailListEl.appendChild(el);
             });
         }
+
         // Open Email
         function openEmail(email) {
             // Mark as read
             email.isUnread = false;
-            renderEmailList(); // Re-render to update unread status (in background)
+            renderEmailList();
+
             // Populate detail view
             document.getElementById('detail-subject').textContent = email.subject;
             document.getElementById('detail-sender').textContent = email.sender;
-            document.getElementById('detail-email').textContent = `<\${email.email}>`;
+            document.getElementById('detail-email').textContent = `<${email.email}>`; // Using backticks correctly
             document.getElementById('detail-date').textContent = email.date;
             document.getElementById('detail-body').innerHTML = email.body;
+
             const avatar = document.getElementById('detail-avatar');
             avatar.textContent = email.sender[0];
             avatar.style.backgroundColor = email.avatarColor;
+
             // Setup links
             const links = document.getElementById('detail-body').querySelectorAll('.email-link');
             links.forEach(link => {
@@ -720,14 +799,15 @@
                     e.preventDefault();
                     handleLinkClick(link.dataset.safe === 'true', link.dataset.url);
                 });
-                // Hover effect to show URL (simulated browser status bar could be added here)
                 link.title = link.dataset.url;
             });
+
             // Switch view
             emailListEl.classList.add('hidden');
             emailDetailEl.classList.remove('hidden');
             currentView = 'detail';
         }
+
         // Handle Link Click
         function handleLinkClick(isSafe, url) {
             if (isSafe) {
@@ -736,6 +816,7 @@
                 triggerScaryMode();
             }
         }
+
         // Show Safe Toast
         function showSafeToast() {
             safeToast.classList.remove('hidden');
@@ -743,30 +824,32 @@
                 safeToast.classList.add('hidden');
             }, 3000);
         }
+
         // Trigger Scary Mode
         function triggerScaryMode() {
             scaryOverlay.classList.remove('hidden');
-            // Play sound? (Browser policy might block auto-play, skipping for now)
         }
+
         // Show Explanation
         function showExplanation() {
             scaryOverlay.classList.add('hidden');
             explanationModal.classList.remove('hidden');
-            // Populate lesson points based on the phishing email (hardcoded for demo)
+
             lessonPoints.innerHTML = `
                 <li>📧 <strong>送信元をチェック:</strong> "amaz0n" の "o" が "0" (ゼロ) になっています！</li>
                 <li>🔗 <strong>URLをチェック:</strong> 本物のAmazonなら "amazon.co.jp" ですが、これは違います。</li>
                 <li>⏰ <strong>急かしてくる:</strong> 「24時間以内」などと焦らせるのは詐欺の典型です。</li>
             `;
         }
+
         // Close Modal
         function closeModal() {
             explanationModal.classList.add('hidden');
-            // Return to inbox
             emailDetailEl.classList.add('hidden');
             emailListEl.classList.remove('hidden');
             currentView = 'inbox';
         }
+
         // Event Listeners
         function setupEventListeners() {
             backBtn.addEventListener('click', () => {
@@ -774,11 +857,14 @@
                 emailListEl.classList.remove('hidden');
                 currentView = 'inbox';
             });
+
             explainBtn.addEventListener('click', showExplanation);
             closeModalBtn.addEventListener('click', closeModal);
         }
+
         // Run
         init();
     </script>
 </body>
+
 </html>
